@@ -2,6 +2,7 @@
 from Tkinter import *
 import json
 
+#获取一次输入的打字间隔信息，结果以list返回
 class TypingInfoGetter(object):
 	_lstResult = []
 	_nFirstKeyPressTime = -1
@@ -56,8 +57,8 @@ class TypingInfoGetter(object):
 		self._objEntry['textvariable'] = self._text
 		self._objEntry.pack()
 	
-	def __init__(self,test_counter):
-		title = 'counter:%d total:5' %(test_counter)
+	def __init__(self,test_counter,total_counter):
+		title = 'counter:%d total:%d' %(test_counter,total_counter)
 		self._objWindow = Tk(className=title )
 		#文本提示
 		with open('test.in','r') as f:
@@ -75,13 +76,20 @@ class TypingInfoGetter(object):
 		return self._lstResult
 		
 		
-#class GetResult(object)
+class GetResult(object):
+    _results = list()
+    def __init__(self,times):
+	for i in range(times):
+		result = TypingInfoGetter(i+1,times).getResult()
+		self._results.append(result)
 
+    #按list返回
+    def List(self):
+        return self._results
+    def Dict(self):
+        return json.dumps(self._results)
+	#tmp = json.dumps(type_info)
 if __name__ == '__main__':
-	type_info = list()
-	for i in range(5):
-		result = TypingInfoGetter(i+1).getResult()
-		type_info.append(result)
-		tmp = json.dumps(type_info)
-	print tmp	
-	
+	#print tmp	
+        print GetResult(2).List()
+        print GetResult(2).Dict()
