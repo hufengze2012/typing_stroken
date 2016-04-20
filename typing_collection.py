@@ -1,6 +1,11 @@
 # -*- coding:utf-8 -*-
 from Tkinter import *
 import json
+import os
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
 
 #获取一次输入的打字间隔信息，结果以list返回
 class TypingInfoGetter(object):
@@ -86,10 +91,21 @@ class GetResult(object):
     #按list返回
     def List(self):
         return self._results
-    def Dict(self):
+    def Jason(self):
         return json.dumps(self._results)
 	#tmp = json.dumps(type_info)
+    def save_as_file(self):
+        cnt = 0
+        while True: #第一个顺位未出现数字作为文件名
+            cnt = cnt+1
+            path = 'data/%d.rec' %cnt
+            if (not os.path.exists(path)):
+                break
+        with open(path,'w') as f:
+            f.write(self.Jason()) #序列化，并保存进文件
+        # todo
 if __name__ == '__main__':
 	#print tmp	
-        print GetResult(2).List()
-        print GetResult(2).Dict()
+       # print GetResult(2).List()
+       # print GetResult(2).Dict()
+       GetResult(2).save_as_file()
