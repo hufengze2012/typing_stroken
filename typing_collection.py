@@ -208,8 +208,8 @@ if __name__ == '__main__':
 			train.cSvmTrainSet()
 			results = train.cSvmPredict(data_path,1)
 			JudgeLegal(results[0])
-			if (results[0] == 1):  #把登陆成功信息输入数据库
-				info.save_as_file('data')	
+#			if (results[0] == 1):  #把登陆成功信息输入数据库
+#				info.save_as_file('data')	
 		#	if results[0] == 1:
 		#		print 'yes'
 		#	else:
